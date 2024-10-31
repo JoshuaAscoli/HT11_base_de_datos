@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaz de Artículos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .table, .form {
+            display: flex;
+            flex-direction: column; /* Mantiene la tabla en columna */
+            margin: 10px;
+            width: 80%; /* Ajusta el ancho según sea necesario */
+        }
+        .table-header, .table-row {
+            display: flex;
+            padding: 0; /* Elimina el padding entre filas */
+            width: 100%; /* Asegura que las filas ocupen el 100% */
+        }
+        .table-header div, .table-row div {
+            padding: 5px; /* Mantiene el padding en las celdas */
+            border: 1px solid #ccc;
+            text-align: center;
+            flex: 1; /* Hace que cada columna ocupe el mismo ancho */
+            min-width: 100px; /* Establece un ancho mínimo */
+            box-sizing: border-box; /* Asegura que el padding se incluya en el ancho */
+            overflow: hidden; /* Oculta el desbordamiento */
+            white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+            text-overflow: ellipsis; /* Agrega "..." al final si el texto es demasiado largo */
+            cursor: pointer; /* Cambia el cursor al pasar por encima */
+        }
+        .table-header {
+            background-color: #4180df;
+            color: white;
+        }
+        .table-row:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .table-row {
+            border-bottom: none; /* Elimina el borde inferior para unificar las filas */
+        }
+        .button {
+            background-color: #f44336;
+            color: white;
+            padding: 8px 16px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .button:hover {
+            background-color: #d32f2f;
+        }
+        .form {
+            flex-direction: row; /* Cambia la dirección a fila para que los formularios estén uno al lado del otro */
+            justify-content: space-between; /* Espaciado entre los formularios */
+            width: 100%; /* Ajusta el ancho según sea necesario */
+            margin: 10px 0; /* Espacio entre formularios */
+        }
+        .form-section {
+            flex: 2; /* Cada sección ocupa el mismo ancho */
+            margin: 10px; /* Espacio entre secciones */
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        /* Estilos del modal */
+        .modal {
+            display: none; /* Oculto por defecto */
+            position: fixed; /* Fijo en la ventana */
+            z-index: 1000; /* Asegura que esté por encima */
+            left: 0;
+            top: 0;
+            width: 100%; /* Ancho completo */
+            height: 100%; /* Altura completa */
+            overflow: auto; /* Permite el scroll si es necesario */
+            background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro semitransparente */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* Centramos el modal */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Ancho del modal */
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>ARTICULOS</h1>
+
+    <!-- Tabla de Artículos -->
+    <div class="table">
+        <div class="table-header">
+            <div>Fecha</div>
+            <div>id_Artículo</div>
+            <div>Título</div>
+            <div>id_Estudiante</div>
+            <div>Estudiante</div>
+            <div>id_Administrador</div>
+            <div>Administrador</div>
+        </div>
+        <div class="table-row" onclick="openModal('1/01/2024', '671ed4a401ec23f2ecda4f6', 'Introducción a MongoDB', '671ed25197e2998a3eba4f09', 'Ana García', '671ed44001ec23f2ecda4f4', 'Carlos')">
+            <div>1/01/2024</div>
+            <div>671ed4a401ec23f2ecda4f6</div>
+            <div>Introducción a MongoDB</div>
+            <div>671ed25197e2998a3eba4f09</div>
+            <div>Ana García</div>
+            <div>671ed44001ec23f2ecda4f4</div>
+            <div>Carlos</div>
+        </div>
+        <div class="table-row" onclick="openModal('15/02/2024', '671ed4a401ec23f2ecda4f7', 'Avances en NoSQL', '671ed25197e2998a3eba40a', 'Luis Martínez', '671ed44001ec23f2ecda4f5', 'Marta')">
+            <div>15/02/2024</div>
+            <div>671ed4a401ec23f2ecda4f7</div>
+            <div>Avances en NoSQL</div>
+            <div>671ed25197e2998a3eba40a</div>
+            <div>Luis Martínez</div>
+            <div>671ed44001ec23f2ecda4f5</div>
+            <div>Marta</div>
+        </div>
+    </div>
+
+    <!-- Formularios de Agregar -->
+    <div class="form">
+        <div class="form-section">
+            <h4>Agregar Artículo</h4>
+            <label>Fecha:</label><input type="text">
+            <label>Título:</label><input type="text">
+            <label>id_Estudiante:</label><input type="text">
+            <label>id_Administrador:</label><input type="text">
+            <button class="button">Agregar</button>
+        </div>
+        <div class="form-section">
+            <h4>Agregar Estudiante</h4>
+            <label>Nombre:</label><input type="text">
+            <label>Apellido:</label>
+            <input type="text">
+            <button class="button">Agregar</button>
+        </div>
+        <div class="form-section">
+            <h4>Agregar Administrador</h4>
+            <label>Nombre:</label><input type="text">
+            <label>Apellido:</label><input type="text">
+            <button class="button">Agregar</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Información del Artículo</h2>
+            <p id="modalInfo"></p>
+        </div>
+    </div>
+
+    <script>
+        function openModal(fecha, idArticulo, titulo, idEstudiante, estudiante, idAdministrador, administrador) {
+            const modalInfo = document.getElementById('modalInfo');
+            modalInfo.innerHTML = `
+                <strong>Fecha:</strong> ${fecha}<br>
+                <strong>id Artículo:</strong> ${idArticulo}<br>
+                <strong>Título:</strong> ${titulo}<br>
+                <strong>id Estudiante:</strong> ${idEstudiante}<br>
+                <strong>Estudiante:</strong> ${estudiante}<br>
+                <strong>id Administrador:</strong> ${idAdministrador}<br>
+                <strong>Administrador:</strong> ${administrador}
+            `;
+            document.getElementById('myModal').style.display = "block"; // Muestra el modal
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = "none"; // Oculta el modal
+        }
+
+        // Cierra el modal si se hace clic fuera del contenido
+        window.onclick = function(event) {
+            const modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
